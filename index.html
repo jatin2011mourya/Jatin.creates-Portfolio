@@ -115,7 +115,7 @@
             <div class="relative mt-16 md:mt-24 w-full flex justify-center animate-fade-in-up" style="animation-delay: 0.5s;">
                 <div class="w-full max-w-5xl px-4">
                      <div class="bg-brand-secondary rounded-xl shadow-2xl p-2 animate-subtle-bob">
-                        <img src="https://static.vecteezy.com/system/resources/thumbnails/048/830/958/small_2x/modern-laptop-displaying-computer-code-on-screen-in-dark-room-setting-photo.jpeg" alt="Showcase of a modern website design" class="rounded-lg w-full object-cover h-[500px]">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/048/830/958/small_2x/modern-laptop-displaying-computer-code-on-screen-in-dark-room-setting-photo.jpeg" alt="Showcase of a modern website design" class="rounded-lg w-full object-cover h-80 md:h-[500px]">
                     </div>
                 </div>
             </div>
@@ -282,8 +282,8 @@
                             </div>
                         </div>
                         <div class="mb-6">
-                             <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
-                             <input type="text" id="subject" name="subject" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-brand-accent focus:border-brand-accent transition text-white">
+                             <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
+                             <input type="tel" id="phone" name="phone" required class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-brand-accent focus:border-brand-accent transition text-white">
                         </div>
                          <div class="mb-6">
                             <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Your Message</label>
@@ -291,10 +291,9 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="bg-brand-accent text-white font-semibold px-10 py-4 rounded-lg hover:bg-brand-accent-hover transition-all duration-300 transform hover:scale-105 shadow-lg w-full">
-                                Send Message
+                                Contact Now
                             </button>
                         </div>
-                        <p id="form-status" class="text-center mt-4 text-sm"></p>
                     </form>
                 </div>
             </div>
@@ -352,27 +351,35 @@
             observer.observe(section);
         });
 
-        // Contact Form Submission
+        // Contact Form Submission to WhatsApp
         const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('form-status');
 
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            formStatus.textContent = 'Sending...';
-            formStatus.style.color = '#3B82F6'; // blue-500
 
-            // This is a mock submission. In a real project, you would use fetch() to send data to a server.
-            setTimeout(() => {
-                formStatus.textContent = 'Your message has been sent successfully!';
-                formStatus.style.color = '#22C55E'; // green-500
-                contactForm.reset();
-                 setTimeout(() => {
-                     formStatus.textContent = '';
-                }, 5000);
-            }, 1500);
+            // IMPORTANT: Replace this with your own WhatsApp number, including the country code without the '+' sign.
+            const yourPhoneNumber = '910000000000'; 
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+
+            const whatsappMessage = `Hello, my name is ${name}.\n\nMy contact details are:\nEmail: ${email}\nPhone: ${phone}\n\nMy message is:\n${message}`;
+            
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/${yourPhoneNumber}?text=${encodedMessage}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Optional: Reset the form after submission
+            contactForm.reset();
         });
     </script>
 
 </body>
 
 </html>
+
+
